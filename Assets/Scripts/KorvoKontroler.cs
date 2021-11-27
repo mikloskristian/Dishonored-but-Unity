@@ -8,6 +8,8 @@ public class KorvoKontroler : MonoBehaviour
 
     public float speed = 12.0f;
     public float gravity = -9.81f;
+    public float jumpHeight = 3.0f;
+    public static bool IsInputEnabled = true;
 
     public Transform groundCheck;
     public float groundDistance = 0.4f;
@@ -15,6 +17,8 @@ public class KorvoKontroler : MonoBehaviour
 
     Vector3 velocity;
     bool isGrounded;
+    float jumpCount = 0;
+    bool canJump;
 
     // Start is called before the first frame update
     void Start()
@@ -38,8 +42,33 @@ public class KorvoKontroler : MonoBehaviour
         Vector3 move = transform.right * x + transform.forward * z;
         controller.Move(move * speed * Time.deltaTime);
 
+        if (Input.GetButtonDown("Jump"))
+        {
+            jumpCount = jumpCount + 1;
+            Jump();
+        }
+
+        if (jumpCount == 1)
+        {
+            canJump = false;
+        }
+
+        if (isGrounded)
+        {
+            jumpCount = 0;
+            canJump = true;
+        }
+
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    void Jump()
+    {
+        if (canJump)
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
     }
 }

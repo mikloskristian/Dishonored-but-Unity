@@ -42,6 +42,17 @@ public class KorvoKontroler : MonoBehaviour
         Vector3 move = transform.right * x + transform.forward * z;
         controller.Move(move * speed * Time.deltaTime);
 
+        if (Input.GetButtonDown("Fire3"))
+        {
+            speed = 17.0f;
+        }
+        if (Input.GetButtonUp("Fire3"))
+        {
+            speed = 12.0f;
+        }
+
+
+
         if (Input.GetButtonDown("Jump"))
         {
             jumpCount = jumpCount + 1;
@@ -62,6 +73,21 @@ public class KorvoKontroler : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            var newScale = transform.localScale;
+            newScale.y = 0.4f;
+            transform.localScale = newScale;
+            speed = speed / 2;
+        }
+        else if (Input.GetButtonUp("Fire1"))
+        {
+            var newScale = transform.localScale;
+            newScale.y = 1f;
+            transform.localScale = newScale;
+            speed = speed * 2;
+        }
     }
 
     void Jump()

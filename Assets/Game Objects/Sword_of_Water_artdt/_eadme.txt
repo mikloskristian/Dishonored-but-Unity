@@ -1,0 +1,14 @@
+Sword of Water
+
+Sword has the following maps:
+Albedo;
+Metallic;
+Normal;
+Ambient Occlusion.
+
+Each map is available in 1024x1024 and 2048x2048.
+
+Albedo maps are in 3 different colours:
+Bright, Original and Deep.
+
+Support: art.dt.official@gmail.com

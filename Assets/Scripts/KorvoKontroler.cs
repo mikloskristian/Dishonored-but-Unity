@@ -14,6 +14,7 @@ public class KorvoKontroler : MonoBehaviour
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
+    public GameObject mac;
 
     Vector3 velocity;
     bool isGrounded;
@@ -74,14 +75,15 @@ public class KorvoKontroler : MonoBehaviour
 
         controller.Move(velocity * Time.deltaTime);
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             var newScale = transform.localScale;
             newScale.y = 0.4f;
             transform.localScale = newScale;
+
             speed = speed / 2;
         }
-        else if (Input.GetButtonUp("Fire1"))
+        else if (Input.GetKeyUp(KeyCode.LeftControl))
         {
             var newScale = transform.localScale;
             newScale.y = 1f;

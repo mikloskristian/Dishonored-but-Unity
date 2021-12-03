@@ -57,10 +57,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\KorvoKontroler.cs" />
-    <Compile Include="Assets\Scripts\GledamKamerom.cs" />
+    <Compile Include="Assets\Scripts\Bolji Kontroler\CharacterMovement.cs" />
     <Compile Include="Assets\Scripts\Teleportation.cs" />
+    <Compile Include="Assets\Scripts\GledamKamerom.cs" />
   </ItemGroup>
   <ItemGroup>
+     <None Include="Assets\Game Objects\Sword_of_Water_artdt\_eadme.txt" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.1f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

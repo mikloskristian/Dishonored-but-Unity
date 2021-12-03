@@ -32,8 +32,9 @@ public class Teleportation : MonoBehaviour
         {
             if (Physics.Raycast(cam.position, cam.forward, out hit, range))
             {
+
                 controller.enabled = false;
-                controller.transform.position = ball.transform.position + new Vector3(0.0f, 2.0f, 0.0f);
+                controller.transform.position = ball.transform.position;
                 controller.enabled = true;
                 ball.SetActive(false);
             }

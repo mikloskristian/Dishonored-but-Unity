@@ -8,7 +8,7 @@ public class CharacterMovement : MonoBehaviour
 
     public bool CanMove { get; private set; } = true;
     private bool _isSprinting => _canSprint && Input.GetKey(_sprintKey);
-    private bool _shouldJump => Input.GetKeyDown(_jumpKey) && _characterController.isGrounded;
+    private bool _shouldJump => Input.GetKeyDown(_jumpKey);
     private bool _shouldCrouch => Input.GetKeyDown(_crouchKey) && !_duringCrouchAnimation && _characterController.isGrounded;
 
     [Header("Functional Options")]
@@ -16,6 +16,8 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private bool _canJump = true;
     [SerializeField] private bool _canCrouch = true;
     [SerializeField] private bool _willSlideOnSlopes = true;
+    [SerializeField] private bool _useFootsteps = true;
+
 
     [Header("Controls")]
     [SerializeField] private KeyCode _sprintKey = KeyCode.LeftShift;
@@ -36,7 +38,9 @@ public class CharacterMovement : MonoBehaviour
 
     [Header("Jumping Parameters")]
     [SerializeField] private float _jumpForce = 8.0f;
+    [SerializeField] private float _doubleJumpForce = 16.0f;
     [SerializeField] private float _gravity = 30.0f;
+    [SerializeField] private float _jumpCount = 2.0f;
 
     [Header("Crouching Parameters")]
     [SerializeField] private float _crouchingHeight = 0.5f;
@@ -46,6 +50,17 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private Vector3 _standingCenter= new Vector3(0, 0, 0);
     private bool _isCrouching;
     private bool _duringCrouchAnimation;
+
+    [Header("Footstep Parameters")]
+    [SerializeField] private float _baseSpeed = 0.5f;
+    [SerializeField] private float _crouchSpeedMultiplier = 1.5f;
+    [SerializeField] private float _SprintSpeedMultiplier = 0.6f;
+    [SerializeField] private AudioSource _footstepsAudioSource = default;
+    [SerializeField] private AudioClip[] _normalWalkClip = default;
+    private float _footstepTimer = 0;
+    private float _getCurrentOffset => _isCrouching ? _baseSpeed * _crouchSpeedMultiplier : _isSprinting ? _baseSpeed * _SprintSpeedMultiplier : _baseSpeed;
+
+
 
     //SLAJDANJE MADAFAKA
     private Vector3 _hitPointNormal;
@@ -97,6 +112,12 @@ public class CharacterMovement : MonoBehaviour
             if (_canCrouch)
             {
                 HandleCrouch();
+
+            }
+
+            if (_useFootsteps)
+            {
+                HandleFootsteps();
             }
 
             ApplyFinalMovement();
@@ -122,9 +143,21 @@ public class CharacterMovement : MonoBehaviour
 
     private void HandleJump()
     {
-        if (_shouldJump)
+        if (_shouldJump && _jumpCount > 0)
         {
-            _moveDirection.y = _jumpForce;
+             if(_jumpCount == 2)
+            {
+                _moveDirection.y = _jumpForce;
+            }
+             else if(_jumpCount == 1)
+            {
+                _moveDirection.y = _doubleJumpForce;
+            }
+             _jumpCount--;
+        }
+        else if(_characterController.isGrounded)
+        {
+            _jumpCount = 2;
         }
     }
 
@@ -149,6 +182,35 @@ public class CharacterMovement : MonoBehaviour
         }
 
         _characterController.Move(_moveDirection * Time.deltaTime);
+    }
+
+    private void HandleFootsteps()
+    {
+        if (!_characterController.isGrounded)
+        {
+            return;
+        }
+        if(_currentInput == Vector2.zero)
+        {
+            return;
+        }
+
+        _footstepTimer -= Time.deltaTime;
+
+        if (_footstepTimer <= 0)
+        {
+            if(Physics.Raycast(_playerCamera.transform.position, Vector3.down, out RaycastHit hit, 3))
+            {
+                switch (hit.collider.tag)
+                {
+                    default:
+                        _footstepsAudioSource.PlayOneShot(_normalWalkClip[Random.Range(0, _normalWalkClip.Length - 1)]);
+                        break;
+                }
+            }
+
+            _footstepTimer = _getCurrentOffset;
+        }
     }
 
     private IEnumerator CrouchStand()

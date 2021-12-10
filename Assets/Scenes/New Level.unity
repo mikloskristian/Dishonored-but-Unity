@@ -631,6 +631,18 @@ PrefabInstance:
       propertyPath: ball
       value: 
       objectReference: {fileID: 326110279}
+    - target: {fileID: 6581098335199121049, guid: 471b5ce341968c244bf8f3326d4a4cc4, type: 3}
+      propertyPath: _teleportSounds
+      value: 
+      objectReference: {fileID: 604547062}
+    - target: {fileID: 6581098335199121049, guid: 471b5ce341968c244bf8f3326d4a4cc4, type: 3}
+      propertyPath: _teleportingWhoosh.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6581098335199121049, guid: 471b5ce341968c244bf8f3326d4a4cc4, type: 3}
+      propertyPath: _teleportingWhoosh.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: c190621399c48d84da80a40a2a468db8, type: 3}
     - target: {fileID: 6581098335372918596, guid: 471b5ce341968c244bf8f3326d4a4cc4, type: 3}
       propertyPath: m_Name
       value: Corvo
@@ -5321,6 +5333,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 211891098}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!20 &233251913 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 6581098335139447982, guid: 471b5ce341968c244bf8f3326d4a4cc4, type: 3}
+  m_PrefabInstance: {fileID: 102267517}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &241712782
 Mesh:
   m_ObjectHideFlags: 0
@@ -8769,6 +8786,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2266246591835805515, guid: 784e7b7929bf0d141a77f43fcb3feb6a, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 2972166939402694837, guid: 784e7b7929bf0d141a77f43fcb3feb6a, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -8817,6 +8838,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sphere
       objectReference: {fileID: 0}
+    - target: {fileID: 2972166939402694843, guid: 784e7b7929bf0d141a77f43fcb3feb6a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6252efa4da5ef80459b62f3bfd52ad12, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 784e7b7929bf0d141a77f43fcb3feb6a, type: 3}
 --- !u!1 &662565596
@@ -21836,6 +21861,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0356eee788bf31448401b2bf80bdac9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerModel: {fileID: 1758600947}
+  _camera: {fileID: 233251913}
 --- !u!1 &1826759728
 GameObject:
   m_ObjectHideFlags: 0

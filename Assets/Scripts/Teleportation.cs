@@ -9,6 +9,8 @@ public class Teleportation : MonoBehaviour
     public RaycastHit hit;
     public Transform cam;
     public float range = 200.0f;
+    [SerializeField] private AudioSource _teleportSounds = default;
+    [SerializeField] private AudioClip[] _teleportingWhoosh = default;
 
 
     void Start()
@@ -36,6 +38,7 @@ public class Teleportation : MonoBehaviour
                 controller.transform.position = ball.transform.position + new Vector3(0, 2.0f, 0);
                 controller.enabled = true;
                 ball.SetActive(false);
+                _teleportSounds.PlayOneShot(_teleportingWhoosh[Random.Range(0, _teleportingWhoosh.Length - 1)]);
             }
         }
     }
